@@ -10,7 +10,20 @@
       ></v-file-input>
     </div>
     <div v-else>
-      <v-btn text>Olá eu sou um botão</v-btn>
+      <v-dialog
+        v-model="imageDialog"
+        width="500">
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+              color="blue"
+              v-on="on"
+              v-bind="attrs">
+              Visualizar Imagem
+            </v-btn>
+          </template>
+          <v-img :src="url"/>
+      </v-dialog>
+      <!-- <v-btn text color="blue">Visualizar Imagem</v-btn> -->
     </div>
   </v-container>
 </template>
@@ -21,10 +34,13 @@ export default {
   data: () => ({
     image: null,
     isImageAttached: false,
+    imageDialog: false,
+    url: null,
   }),
   methods: {
     imageAttached() {
       this.isImageAttached = true;
+      this.url = URL.createObjectURL(this.image);
       console.log('Click no botão pra ver a imagem.');
     },
   },
